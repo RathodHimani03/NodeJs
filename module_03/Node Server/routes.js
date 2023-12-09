@@ -20,14 +20,14 @@ const requestHandler = (req, res) => {
 
         const body = []
         req.on('data', (chunk) => {
-            console.log(chunk)
+
             body.push(chunk)
         })
 
         return req.on('end', () => {
             const parseBody = Buffer.concat(body).toString();
             console.log(parseBody)
-            const message = parseBody.split('=')[1];
+            const message = parseBody.split('=')[0];
             fs.writeFile('message.txt', message, () => {
                 req.statusCode = 302
                 res.setHeader('Location', '/')
@@ -47,4 +47,7 @@ const requestHandler = (req, res) => {
 };
 
 
-module.exports = requestHandler
+// module.exports = requestHandler
+
+exports.handler = requestHandler;
+exports.someText = 'some hard textcode';
